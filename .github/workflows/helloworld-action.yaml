@@ -1,0 +1,22 @@
+name: helloworld-action
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/helloworld.c'
+env:
+  SRC_PATH: ${{ github.workspace }}/src
+  SSH_ACTIONS: false
+  
+jobs:
+  helloworld:
+    runs-on: ubuntu-latest
+    steps:
+      - ues: actions/checkout@v3
+      - run: | 
+        sudo apt-get install build-essential
+        cd $SRC_PATH
+        gcc -o hello helloworld.c
+        ./hello
